@@ -93,4 +93,13 @@ for line in codecs.open('xsams_units.txt', 'r', encoding='utf-8'):
     tests.append(line.strip())
 for test in tests:
     compound_unit = parse_compound_units(test)
-    print test,':',compound_unit
+    #print test,':',compound_unit,'conversion to SI:', compound_unit.to_si()
+    print test,':',compound_unit,'dimensions:', compound_unit.dims
+
+compound_unit1 = parse_compound_units('cm-1/atm')
+compound_unit2 = parse_compound_units('cm-1/Pa')
+compound_unit3 = parse_compound_units('1/m/Torr')
+compound_unit1 = parse_compound_units('Torr')
+compound_unit2 = parse_compound_units('mbar')
+
+print compound_unit1,'to',compound_unit2,':', compound_unit1.conversion(compound_unit2)

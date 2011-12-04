@@ -31,34 +31,62 @@ class BaseUnit(object):
         self.fac = fac
         self.description = description
         self.latex = latex
-        self.dimensions = dims
+        self.dims = dims
     def __str__(self):
         return self.stem
 
 class AtomUnit(object):
-    def __init__(self, prefix, base_unit, exponent):
+    def __init__(self, prefix, base_unit, exponent=1):
         self.prefix = prefix
         self.si_prefix = si_prefixes.get(prefix)
         self.base_unit = base_unit
         self.exponent = exponent
+
+        self.si_fac = 1.
+        if self.si_prefix:
+            self.si_fac = self.si_prefix.fac
+        self.si_fac = (self.si_fac * self.base_unit.fac) ** self.exponent
+
+        self.dims = self.base_unit.dims ** self.exponent
+
     def __pow__(self, power):
         return AtomUnit(self.prefix, self.base_unit, self.exponent * power)
+
     def __str__(self):
         return unicode((self.prefix, unicode(self.base_unit), self.exponent))
 
 class CompoundUnit(object):
     def __init__(self, atom_units):
         self.atom_units = atom_units
+        self.dims = self.get_dims()
+
+    def get_dims(self):
+        dims = Dimensions()
+        for atom_unit in self.atom_units:
+            dims *= atom_unit.dims
+        return dims
+
     def __mul__(self, other_atom):
         atom_units = self.atom_units
         atom_units.append(other_atom)
         return CompoundUnit(atom_units)
+
     def __div__(self, other_atom):
         atom_units = self.atom_units
         atom_units.append(other_atom**-1)
         return CompoundUnit(atom_units)
+
     def __str__(self):
         return u'.'.join([unicode(atom_unit) for atom_unit in self.atom_units])
+
+    def to_si(self):
+        fac = 1.
+        for atom_unit in self.atom_units:
+            fac *= atom_unit.si_fac
+        return fac
+
+    def conversion(self, other):
+        return self.to_si() / other.to_si()
             
 class Dimensions(object):
     # these are the abbreviations for Length, Mass, Time, Temperature,
