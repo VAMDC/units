@@ -27,8 +27,8 @@ class UnitAtom(object):
 
 caps = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 lowers = caps.lower()
-letters = u'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-digits = u'1234567890'
+letters = u'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0'
+digits = u'123456789'
 exponent = Word(digits + '-')
 prefix = oneOf(units.si_prefixes.keys())
 ustem = Word(letters + u'Å')
@@ -68,7 +68,7 @@ def parse_mult_units(munit):
     return units.CompoundUnit(atom_units)
 
 def parse_compound_units(cunit):
-    print cunit
+    #print cunit
     dims = units.Dimensions()
     div_fields = cunit.split('/')
     ndiv_fields = len(div_fields)
@@ -77,29 +77,29 @@ def parse_compound_units(cunit):
         compound_unit = compound_unit / parse_unit_atom(div_field)
     return compound_unit
 
-parse_unit_atom('cm3')
-parse_unit_atom('nmol')
-parse_unit_atom('Mmol')
-parse_unit_atom('mmHg')
+#parse_unit_atom('cm3')
+#parse_unit_atom('nmol')
+#parse_unit_atom('Mmol')
+#parse_unit_atom('mmHg')
 #parse_unit_atom('pDa')
-parse_unit_atom('s-1')
-parse_unit_atom(u'μs')
-parse_unit_atom(u'Å')
-parse_unit_atom(u'mÅ-1')
+#parse_unit_atom('s-1')
+#parse_unit_atom(u'μs')
+#parse_unit_atom(u'Å')
+#parse_unit_atom(u'mÅ-1')
+#
+#tests = ['cm/s-1/K2', '1/atm/cm']
+#tests = []
+#for line in codecs.open('xsams_units.txt', 'r', encoding='utf-8'):
+#    tests.append(line.strip())
+#for test in tests:
+#    compound_unit = parse_compound_units(test)
+#    #print test,':',compound_unit,'conversion to SI:', compound_unit.to_si()
+#    print test,':',compound_unit,'dimensions:', compound_unit.dims
 
-tests = ['cm/s-1/K2', '1/atm/cm']
-tests = []
-for line in codecs.open('xsams_units.txt', 'r', encoding='utf-8'):
-    tests.append(line.strip())
-for test in tests:
-    compound_unit = parse_compound_units(test)
-    #print test,':',compound_unit,'conversion to SI:', compound_unit.to_si()
-    print test,':',compound_unit,'dimensions:', compound_unit.dims
+#compound_unit1 = parse_compound_units('cm-1/atm')
+#compound_unit2 = parse_compound_units('cm-1/Pa')
+#compound_unit3 = parse_compound_units('1/m/Torr')
+#compound_unit1 = parse_compound_units('Torr')
+#compound_unit2 = parse_compound_units('mbar')
 
-compound_unit1 = parse_compound_units('cm-1/atm')
-compound_unit2 = parse_compound_units('cm-1/Pa')
-compound_unit3 = parse_compound_units('1/m/Torr')
-compound_unit1 = parse_compound_units('Torr')
-compound_unit2 = parse_compound_units('mbar')
-
-print compound_unit1,'to',compound_unit2,':', compound_unit1.conversion(compound_unit2)
+#print compound_unit1,'to',compound_unit2,':', compound_unit1.conversion(compound_unit2)

@@ -195,11 +195,12 @@ BaseUnit('Ry', 'rydberg', 'energy', 13.60569253 * 1.602176487e-19, '', 'Ry', d_e
 # Non-SI mass units
 BaseUnit('u', 'atomic mass unit', 'mass', 1.660538921e-27, '', 'u', d_mass),
 BaseUnit('amu', 'atomic mass unit', 'mass', 1.660538921e-27, '', 'amu', d_mass),
-BaseUnit('me', 'electron mass', 'mass', 9.10938291e-31, '', 'm_e', d_mass),
+BaseUnit('Da', 'dalton', 'mass', 1.660538921e-27, '', 'Da', d_mass),
+BaseUnit('m_e', 'electron mass', 'mass', 9.10938291e-31, '', 'm_e', d_mass),
 
 # Non-SI length units
 BaseUnit(u'Å', 'angstrom', 'length', 1.e-10, '', '\AA', d_length),
-BaseUnit('a0', 'bohr radius', 'length', 5.2917721092e-11, '', 'a_0', d_length),
+BaseUnit('a0', 'bohr', 'length', 5.2917721092e-11, '', 'a_0', d_length),
 
 # Non-SI area units
 BaseUnit('b', 'barn', 'area', 1.e-28, '', 'b', d_area),
@@ -213,20 +214,31 @@ BaseUnit('hr', 'hour', 'time', 3600., '', 'hr', d_time),
 BaseUnit('h', 'h', 'time', 3600., '', 'h', d_time),
 BaseUnit('d', 'day', 'time', 86400., '', 'd', d_time),
 
+# Other cgs units
+BaseUnit('k', 'kayser', 'wavenumber', 100., '', 'k', d_length**-1),
+BaseUnit('D', 'debye', 'electric dipole moment', 1.e-21/299792458., '', 'D',
+         d_charge * d_length),
+
+BaseUnit('hbar', 'hbar', 'angular momentum', 1.05457148e-34, '', '\hbar',
+         Dimensions(L=2, M=1, T=-1)),
+BaseUnit('e', 'electron charge', 'charge', 1.602176565e-19, '', 'e', d_charge),
+
 ]
 
 base_unit_stems = {}
 #all_units = []
 for base_unit in base_units:
     base_unit_stems[base_unit.stem] = base_unit
+    #all_units.append(base_unit.stem)
     #for prefix in si_prefixes.keys():
-        #unit = ''.join([prefix, base_unit.stem])
-        #unit = prefix +  base_unit.stem
-        #all_units.append(unit)
+    #    unit = ''.join([prefix, base_unit.stem])
+    #    unit = prefix +  base_unit.stem
+    #    all_units.append(unit)
         #base_unit_stems.append(base_unit.stem)
-        #print unit,
+    #    print unit,
     #print
 
 # any duplicate units?
 #y = Counter(all_units)
 #print [i for i in y if y[i]>1]
+#sys.exit()
