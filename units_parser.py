@@ -7,7 +7,8 @@
 # physical units:
 
 import units
-from pyparsing import Word, Group, Literal, Suppress, ParseException, oneOf, Optional
+from pyparsing import Word, Group, Literal, Suppress, ParseException, oneOf,\
+                      Optional
 import codecs
 
 class UnitsError(Exception):
@@ -23,7 +24,6 @@ class UnitAtom(object):
             pre, post = ustring[0], ustring[1:]
         else:
             post = ustring
-        
 
 caps = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 lowers = caps.lower()

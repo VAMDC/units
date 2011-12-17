@@ -24,7 +24,8 @@ si_prefixes = { u'f': SIPrefix(u'f', 'femto', -15),
               }
 
 class BaseUnit(object):
-    def __init__(self, stem, name, unit_type, fac, description, latex, dims=None):
+    def __init__(self, stem, name, unit_type, fac, description, latex,
+                 dims=None):
         self.stem = stem
         self.name = name
         self.unit_type = unit_type
@@ -86,6 +87,8 @@ class CompoundUnit(object):
         return fac
 
     def conversion(self, other):
+        if self.get_dims != other.get_dims:
+            print 'failure in conversion: units have different dimensions'
         return self.to_si() / other.to_si()
             
 class Dimensions(object):
@@ -139,6 +142,12 @@ class Dimensions(object):
         if len(s_dims) == 0:
             return '[dimensionless]'
         return '.'.join(s_dims)
+
+    def __eq__(self, other):
+        for i, dim in enumerate(self.dims):
+            if other.dims[i] != dim:
+                return False
+        return True
 
 d_dimensionless = Dimensions()
 d_length = Dimensions(L=1)
