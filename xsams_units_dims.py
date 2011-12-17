@@ -43,7 +43,8 @@ xsams_units = {
 'HyperfineConstantB': [d_energy, d_frequency],
 'MolecularWeight': [d_mass,],
 'HarmonicFrequency': [d_wavenumber, d_frequency],
-    #'Intensity': [],
+# Normal mode intensity: km/mol, cm, etc.
+'Intensity': [Dimensions(L=1,Q=-1), Dimensions(L=1)],
 'ParticleMass': [d_mass,],
 'MaterialThickness': [d_length,],
 'MaterialTemperature': [Dimensions(Theta=1),],
